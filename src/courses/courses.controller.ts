@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Put, Post } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 
 @Controller('cursos')
@@ -34,14 +34,16 @@ export class CoursesController {
         return "Usuario criado com sucesso"
     }
 
-    @Patch(':id')
-    update(@Param('id') id: number) {
-        return this.courseServices.findOne(id)
+    @Put(':id')
+    update(@Param('id') id: string, @Body() updateCourseDTO: any) {
+        console.log(updateCourseDTO)
+        return this.courseServices.update(+id, updateCourseDTO);
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete(':id')
-    remove(@Param(':id') id: number) {
+    remove(@Param('id') id: number) {
+        console.log('Usuario removido')
         return this.courseServices.remove(id)
     }
 }
