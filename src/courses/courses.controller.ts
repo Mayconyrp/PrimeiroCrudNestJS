@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Put, Post } from '@nestjs/common';
 import { CoursesService } from './courses.service';
+import { CreateCourseDTO } from './dto/create-course.dto';
+import { UpdateCourseDTO } from './dto/update-course.dto'
 
 @Controller('cursos')
 export class CoursesController {
@@ -11,14 +13,6 @@ export class CoursesController {
         return this.courseServices.findAll()
     }
 
-    /*@Get(':id')
-    findOne(@Param('id') id: number) {
-        console.log(id)
-        const  course = this.courseServices.findOne(id)
-        return {data: course}
-
-    }
-*/
     @Get(':id')
     findOne(@Param('id') id: number) {
         console.log(id)
@@ -28,22 +22,21 @@ export class CoursesController {
 
     @HttpCode(200)
     @Post()
-    create(@Body() body) {
-        console.log(body)
-        this.courseServices.create(body)
+
+    create(@Body() createCourseDTO: CreateCourseDTO) {
+        this.courseServices.create(createCourseDTO)
         return "Usuario criado com sucesso"
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateCourseDTO: any) {
-        console.log(updateCourseDTO)
+    update(@Param('id') id: string, @Body() updateCourseDTO: UpdateCourseDTO) {
         return this.courseServices.update(+id, updateCourseDTO);
     }
+
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete(':id')
     remove(@Param('id') id: number) {
-        console.log('Usuario removido')
         return this.courseServices.remove(id)
     }
 }
