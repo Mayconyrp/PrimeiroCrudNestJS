@@ -22,10 +22,9 @@ export class CoursesController {
 
     @HttpCode(200)
     @Post()
-
     create(@Body() createCourseDTO: CreateCourseDTO) {
         this.courseServices.create(createCourseDTO)
-        return "Usuario criado com sucesso"
+        return "Usuario criado com sucesso:" + createCourseDTO.toString()
     }
 
     @Put(':id')
