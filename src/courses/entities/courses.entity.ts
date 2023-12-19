@@ -1,6 +1,6 @@
-/* eslint-disable prettier/prettier */
 
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, JoinTable, PrimaryGeneratedColumn } from "typeorm";
+import { Tag } from "./tags.entity";
 
 @Entity('cursos')
 export class Course {
@@ -10,6 +10,11 @@ export class Course {
     name: string;
     @Column()
     descricao: string;
-    @Column('json',{nullable: true})
-    tags: string[];
+    
+    @JoinTable()    
+    @ManyToMany(()=> Tag, tag => tag.courses , { 
+        cascade: true})
+    tags: Tag[];
+
+
 }
